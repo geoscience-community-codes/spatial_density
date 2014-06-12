@@ -31,23 +31,6 @@ use PDL::LinearAlgebra::Trans qw(msqrt);
 
 $pi = pdl(3.1415926535897932384626433832795029);
 
-############################################################
-# INPUT SECTION: These variables can be adjusted by the user
-############################################################
-## This is the set of events
-# vents.wgs84z10.xy: N = 261	<607446/658540>	<4466056/4502916>
-#my $west = 420000;
-#my $east = 436000;
-#my $south = 4439000;
-#my $north = 4463000;
-
-#my $Grid_spacing = 100;
-
-
-# The input file of vents
-#my $in = "events_zoom.wgs84.z38.utm";
-# The output file for the spatial intensity grid 
-#my $out1 = "spatial_density_samse_events_zoom.wgs84.z38.utm";
 
 my $args = @ARGV;
 if ($args < 1) {
