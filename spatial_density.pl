@@ -128,7 +128,9 @@ print STDERR "Determinant: $detH\n";
 # inverse of the square root matrix
 $sqrtH = inv($sqrtH);
 # gaussian constant
-$Const = 2.0 * $pi * $detH;
+#This is to calculate spatial density
+# that is dedive by the number of vents.
+$Const = 2.0 * $pi * $detH * ($num_vents+1);
 
 # Create the spatial intensity grid 
 # my @pdf;
