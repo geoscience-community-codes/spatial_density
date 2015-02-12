@@ -130,7 +130,7 @@ $sqrtH = inv($sqrtH);
 # gaussian constant
 #This is to calculate spatial density
 # that is dedive by the number of vents.
-$Const = 2.0 * $pi * $detH * ($num_vents+1);
+$Const = 2.0 * $pi * $detH * ($num_vents);
 
 # Create the spatial intensity grid 
 # my @pdf;
