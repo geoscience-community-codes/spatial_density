@@ -27,3 +27,6 @@ If there is no output data then check the file: R-samse.Rout
 The R-samse file is an R script and the R-samse.Rout 
 provides information about
 the SAMSE bandwith calculated using 'R'.
+
+PLOT CONTOURS
+The PERL script plot_contours.gmt.pl will grid and contour the spatial density output grid file. This script plots the 5%, 16%, 33%, 50%, 67%, 84%, 95%, and 99% contours of spatial density. GMT version 5 needs to be installed in order to run this script. It depends on the same configuration file as the spatial density calculator (above). If the map size is too large or too small, increase (make map smaller) or decrease (make map larger) the map scaling number, which is hard coded to 100000 in the script (i.e.,  -Jm1:100000m).
