@@ -1,9 +1,10 @@
 spatial_density
 ===============
 
-This perl script calculates a spatial density grid (ASCII format) based on a gaussian kernel function using a SAMSE bandwith calculated using the 'ks' package which is part of the statistical programming language R. 
+This perl script calculates a spatial density or spatial intensity grid (ASCII format) based on a gaussian kernel function using a SAMSE bandwith calculated using the 'ks' package which is part of the statistical programming language R. 
 
 This program requires a configuration file usually specified as spatial_density.conf
+Please edit this file first.
 The filename is specified on the command line. To run the script type:
 perl spatial_density.pl spatial_density.conf
 
@@ -29,4 +30,4 @@ provides information about
 the SAMSE bandwith calculated using 'R'.
 
 PLOT CONTOURS
-The PERL script plot_contours.gmt.pl will grid and contour the spatial density output grid file. This script plots the 5%, 16%, 33%, 50%, 67%, 84%, 95%, and 99% contours of spatial density. GMT version 5 needs to be installed in order to run this script. It depends on the same configuration file as the spatial density calculator (above). If the map size is too large or too small, increase (make map smaller) or decrease (make map larger) the map scaling number, which is hard coded to 100000 in the script (i.e.,  -Jm1:100000m).
+The PERL script plot_contours.gmt.pl will grid and contour the spatial density output grid file. This script plots the 5%, 16%, 33%, 50%, 67%, 84%, 95%, and 99% contours of spatial density. GMT version 5 needs to be installed in order to run this script. It depends on the same configuration file as the spatial density calculator (above). If the map size is too large or too small, increase (make map smaller) or decrease (make map larger) the map scaling number, which is hard coded to 100000 in the script (i.e.,  -Jm1:100000m). This plotting script is called directly from the spatial density.pl script. 
