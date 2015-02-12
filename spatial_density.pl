@@ -116,6 +116,10 @@ open(OUT1, ">$out1") or die("can't open $out1: $!");
 my @vent;
 # Load vent locations
 my $num_vents = load_file($in, \@vent);
+# Calculate spatial density
+my $spd = $num_vents;
+#Calculate spatial intensity
+if ($P{SPD} == 2) { $spd = 1; }
 
 # Calculate necessary constants for 
 # the Gaussian kernel fuctions:
@@ -130,7 +134,7 @@ $sqrtH = inv($sqrtH);
 # gaussian constant
 #This is to calculate spatial density
 # that is dedive by the number of vents.
-$Const = 2.0 * $pi * $detH * ($num_vents);
+$Const = 2.0 * $pi * $detH * $spd;
 
 # Create the spatial intensity grid 
 # my @pdf;
@@ -156,6 +160,8 @@ do {
 close OUT1;
 print STDERR "DOne\n";
 system "date";
+print STDERR "Grid calculated; now plotting ....\n";
+system "perl plot_contours.gmt.pl $ARGV[0] $out1";
 
 ##################################################################
 # Function gauss($$$$)
