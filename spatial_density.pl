@@ -64,7 +64,7 @@ my $out1 = "$in.samse.xyz";
 my $band = $P{BANDWIDTH_FILE};
 #FIND BANDWIDTH##################
 print "\nOptimizing Pilot Bandwidth (SAMSE)\n";
-
+system "touch bandwidth.dat";
 open KOP, ">R-samse" or die "Cannot create R-script";
 
 print KOP "library(ks)\n";
