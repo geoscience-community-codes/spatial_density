@@ -161,7 +161,9 @@ close OUT1;
 print STDERR "DOne\n";
 system "date";
 print STDERR "Grid calculated; now plotting ....\n";
-system "perl plot_contours.gmt.pl $ARGV[0] $out1";
+$cmd = sprintf ("%s", "perl plot_contours.gmt.pl $ARGV[0] $out1");
+print "$cmd\n";
+system "$cmd";
 
 ##################################################################
 # Function gauss($$$$)
