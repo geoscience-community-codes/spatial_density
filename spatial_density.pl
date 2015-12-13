@@ -34,7 +34,7 @@ $pi = pdl(3.1415926535897932384626433832795029);
 
 my $args = @ARGV;
 if ($args < 1) {
-  print "USAGE: perl $0 <spatial_density.conf>\n\n";
+  print "USAGE: perl $0 <file.conf>\n\n";
   exit;
 }
 
