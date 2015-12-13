@@ -32,6 +32,7 @@ $utm_south = $P{SOUTH};
 $utm_north = $P{NORTH};
 $utm_zone = $P{UTM_ZONE};
 $grid_spacing = $P{GRID_SPACING};
+$map_scaling= $P{MAP_SCALING};
 
 $out = "$in.eps";
 $contours = "contours";
@@ -47,6 +48,7 @@ while (<IN>) {
  ($e, $n, $data[$ct]) = split " ", $_;
  $data_sum += $data[$ct++];
 }
+print "Data sums to $data_sum\n";
 @data_s = sort{$b <=> $a} @data;
  $num = @data_s;
  print "Sorted $num items.\n";
@@ -136,7 +138,7 @@ my ($north, $east) = $proj->inverse($utm_east, $utm_north);
 # .009259259 degree spacing for 100m
 # .008333 degree for 90m
 #
-my $gs = (0.000092222 * $grid_spacing/2);
+my $gs = (0.000092222 * $grid_spacing/4);
 print stderr "WEST $west\nEAST $east\nSOUTH $south\nNORTH $north\n";
 system "invproj +datum=WGS84 +ellps=WGS84 +proj=utm +zone=$utm_zone -f %.6f $in > $in.ll";
 $in .= ".ll";
@@ -144,15 +146,16 @@ system "invproj +datum=WGS84 +ellps=WGS84 +proj=utm +zone=$utm_zone -f %.6f $eve
 $events .= ".ll";
 `gmt surface $in -R$west/$east/$south/$north -Gsurface.grd -I$gs -V`;
 `gmt makecpt -C$cpt -V > grid.cpt `;
-`gmt grdimage surface.grd -R$west/$east/$south/$north -Cgrid.cpt -Jm1:100000m -X1i -Y1i  -E150 -V -K -P > $out`;
+$scaling = "1:$map_scaling"."m";
+`gmt grdimage surface.grd -R$west/$east/$south/$north -Cgrid.cpt -Jm$scaling -X1i -Y1i  -E150 -V -K -P > $out`;
 `gmt grdcontour --FORMAT_FLOAT_OUT=%e surface.grd -Ccontours -A- -Gn1 -W.5p,0 -Jm -R -V -K -O >> $out`;
 #`gmt pscoast -R -Jm  -Dh  -W.5p,100 -N1/1,255/255/255 -O -K -V >> $out`;
-`gmt psxy $events -Jm -Sc.2c -R -Gwhite -W.25p,0 -N -O -K -V >> $out`;
+`gmt psxy $events -Jm -Sc.1c -R -Gwhite -W.25p,0 -N -O -K -V >> $out`;
 #system "gmt psxy -R -Jm -St0.8c -Gblack -V -O -K << eof >> $out
 #44.184500	40.520287
 #eof";
 #`gmt psxy $aoi -Jm -Ss.1i -R -G0 -O -K -V >> $out`;
 #`gmt pstext $aoi -Jm -R -D0/-.14 -G0 -O -K -V >> $out`;
-`gmt psbasemap --FONT_ANNOT_PRIMARY=10p -Jm -R -Bxa0.05 -Bya0.05 -BWSne -V -O -K >> $out`;
-`gmt psscale --FONT_ANNOT_PRIMARY=10p --FORMAT_FLOAT_OUT=%.2e -D11c/12c/4c/.2c -Cgrid.cpt -L  -O -V >> $out`;
+`gmt psbasemap --FORMAT_GEO_MAP=ddd.x --MAP_FRAME_TYPE=plain --FONT_ANNOT_PRIMARY=10p -Jm -R -Bxa0.05 -Bya0.05 -BWSne -V -O -K >> $out`;
+`gmt psscale --FONT_ANNOT_PRIMARY=10p --FORMAT_FLOAT_OUT=%.2e -D3c/14c/4c/.2c -Cgrid.cpt -L  -O -V >> $out`;
 `gmt ps2raster $out -A -Tg -V`;
