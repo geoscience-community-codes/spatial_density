@@ -180,7 +180,7 @@ system "$cmd";
 # OUTPUTS:
 # (1) lambda (i.e. spatial intensity at the current grid location)
 ####################################################################
-sub gauss($$$$) {
+sub gauss() {
 
   my $i, my $dx, my $dy, my $dist, my $dxdy, my $Tdxdy;
   my $sum = 0.0; 
@@ -211,7 +211,7 @@ sub gauss($$$$) {
 # OUTPUTS: 
 # (1) Number of data lines in the file
 #############################################
-sub load_file($$) {
+sub load_file() {
   
   my $in = $_[0];
   # Open input file of vent locations and create aray
