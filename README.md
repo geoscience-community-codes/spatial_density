@@ -30,4 +30,10 @@ provides information about
 the SAMSE bandwith calculated using 'R'.
 
 PLOT CONTOURS
-The PERL script plot_contours.gmt.pl will grid and contour the spatial density output grid file. This script plots the 5%, 16%, 33%, 50%, 67%, 84%, 95%, and 99% contours of spatial density. GMT version 5 needs to be installed in order to run this script. It depends on the same configuration file as the spatial density calculator (above). If the map size is too large or too small, increase (make map smaller) or decrease (make map larger) the MAP_SCALING number in the spatial_density.conf file. This plotting script is called directly from the spatial density.pl script. 
+The PERL script plot_spd.gmt.pl will grid and contour the spatial density output grid file. This script has 4 plotting options:
+Option 0: No plot.
+Option 1:  Quartile plot (WGS84/latlon)
+Option 2:  Log(output) plot (WGS84/lat/lon
+Option 3:  Quartile plot (UTM/meters)
+Option 4:  Log(output) plot (UTM/meters)
+The quartile plots contour the 5%, 16%, 33%, 50%, 67%, 84%, 95%, and 99% contours of spatial density. GMT version 5 needs to be installed in order to run this script. It depends on the same configuration file as the spatial density calculator (above). If the map size is too large or too small, increase (make map smaller) or decrease (make map larger) the MAP_SCALING number in the spatial_density.conf file. This plotting script is called directly from the spatial density.pl script. You can also run just the plotting script directly from the command line using two additional command parameters: perl plot_spd.gmt.pl spatial_density.conf <your spatial denstiy output file>
