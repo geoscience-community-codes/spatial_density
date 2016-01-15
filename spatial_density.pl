@@ -37,7 +37,8 @@ if ($args < 1) {
   print "USAGE: perl $0 <file.conf>\n\n";
   exit;
 }
-
+open (LOG, ">>logfile") || die ("$!");
+print LOG "\n Parameters:\n";
 open (CONF, "<$ARGV[0]") || die ("$!");
 my %P;
 my $key;
@@ -48,9 +49,11 @@ while (<CONF>) {
   	chomp($value);
 	  $P{$key} = $value;
  		print STDERR "$key $value\n";
+ 		print LOG "$key $value\n";
   }
 }
 close CONF;
+print LOG "\n Calculating spatial density for $P{EVENT_FILE} now ....\n";
 my $west = $P{WEST};
 my $east = $P{EAST};
 my $south = $P{SOUTH};
@@ -106,7 +109,7 @@ my $H = pdl [
 ];
 ###############################################################
 
-print STDERR "Bandwidth Matrix:$H";
+print LOG "Bandwidth Matrix (units = square kilometers):$H\n";
 # The input file of event locations
 
 # Creat output files
@@ -125,10 +128,10 @@ if ($P{SPD} == 2) { $spd = 1; }
 # the Gaussian kernel fuctions:
 # square root of the bandwidth matrix
 $sqrtH = msqrt($H);
-print STDERR "Square Root Matrix:$sqrtH";
+print LOG "Square Root Matrix:$sqrtH";
 # determinant of the bandwidth matrix
 $detH = det($sqrtH);
-print STDERR "Determinant: $detH\n";
+print LOG "Determinant: $detH\n";
 # inverse of the square root matrix
 $sqrtH = inv($sqrtH);
 # gaussian constant
@@ -158,6 +161,7 @@ do {
     } while ($Y < $north);
 } while ($X < $east);
 close OUT1;
+close LOG;
 print STDERR "DOne\n";
 system "date";
 print STDERR "Grid calculated; now plotting ....\n";
@@ -225,6 +229,6 @@ sub load_file() {
     }
   }
   close INFO;
- print "Loaded input vents: $in, $i lines\n";
+ print LOG "Loaded input vents: $in, $i lines\n";
  return $i;
 }
