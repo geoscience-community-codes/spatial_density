@@ -38,6 +38,7 @@ if ($args < 1) {
   exit;
 }
 open (LOG, ">>logfile") || die ("$!");
+print "Opening and appending run info to to: logfile\n";
 print LOG "\n Parameters:\n";
 open (CONF, "<$ARGV[0]") || die ("$!");
 my %P;
