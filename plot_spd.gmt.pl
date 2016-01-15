@@ -5,7 +5,8 @@ if ($args < 1) {
   print qq(USAGE: perl $0 <yourfile.conf> <XYZ_spatial_density_file>\n\n);
   exit;
 }
-
+open (LOG, ">>logfile") || die ("$!");
+print STDERR "Logging run info to: logfile\n";
 open (CONF, "<$ARGV[0]") || die ("$!");
 my %P;
 my $key;
@@ -47,12 +48,12 @@ $cpt = qq(colors.cpt);
 
 open(CONTOURS, ">$contours") || die("can't open $contours: $!");
 open(CPT, ">$cpt") || die("cannot open $cpt: $!");
-
+print LOG "\n Plotting spatial density contours .....\n";
 $ct=0;
 $data_sum = 0;
 
 if ($plot == 1 or $plot == 3) {
-print STDERR qq(Opening $in\n);
+print LOG qq(Opening $in\n);
 	open(IN, "<$in") || die("can't open $in: $!");
 	while (<IN>) {
 		 ($e, $n, $data[$ct]) = split " ", $_;
@@ -60,7 +61,7 @@ print STDERR qq(Opening $in\n);
 	}
 	@data_s = sort{$b <=> $a} @data;
 	 $num = @data_s;
-	 print STDERR qq(Sorted $num items.\n);
+	 print LOG qq(Sorted $num items.\n);
 
 	my $sum = 0;
 	$ct = 0;
@@ -68,56 +69,56 @@ print STDERR qq(Opening $in\n);
 	while ($sum < ($data_sum*.05) ) {
 		$sum += $data_s[$ct++];
 	}
-	print qq($data_s[$ct-1] a\n);
+	print LOG qq($data_s[$ct-1] a\n);
 	print CONTOURS qq($data_s[$ct-1] \n);
 	$q05 = $data_s[$ct-1];
 
 	while ( $sum < ($data_sum*.16) ) {
 		$sum += $data_s[$ct++];
 	}
-	print qq($data_s[$ct-1] a\n);
+	print LOG qq($data_s[$ct-1] a\n);
 	print CONTOURS qq($data_s[$ct-1] \n);
 	$q15 = $data_s[$ct-1];
 
 	while ( $sum < ($data_sum*.33) ) {
 		$sum += $data_s[$ct++];
 	}
-	print qq($data_s[$ct-1] a\n);
+	print LOG qq($data_s[$ct-1] a\n);
 	print CONTOURS qq($data_s[$ct-1] \n);
 	$q33 = $data_s[$ct-1];
 
 	while ( $sum < ($data_sum*.5) ) {
 		$sum += $data_s[$ct++];
 	}
-	print qq($data_s[$ct-1] a\n);
+	print LOG qq($data_s[$ct-1] a\n);
 	print CONTOURS qq($data_s[$ct-1] \n);
 	$q5 = $data_s[$ct-1];
 
 	while ( $sum < ($data_sum*.67) ) {
 		$sum += $data_s[$ct++];
 	}
-	print qq($data_s[$ct-1] a\n);
+	print LOG qq($data_s[$ct-1] a\n);
 	print CONTOURS qq($data_s[$ct-1] \n);
 	$q67 = $data_s[$ct-1];
 
 	while ( $sum < ($data_sum*.84) ) {
 		$sum += $data_s[$ct++];
 	}
-	print qq($data_s[$ct-1] a\n);
+	print LOG qq($data_s[$ct-1] a\n);
 	print CONTOURS qq($data_s[$ct-1] \n);
 	$q84 = $data_s[$ct-1];
 
 	while ( $sum < ($data_sum*.95) ) {
 		$sum += $data_s[$ct++];
 	}
-	print qq($data_s[$ct-1] a\n);
+	print LOG qq($data_s[$ct-1] a\n);
 	print CONTOURS qq($data_s[$ct-1] \n);
 	$q95 = $data_s[$ct-1];
 
 	while ( $sum < ($data_sum*.99) ) {
 		$sum += $data_s[$ct++];
 	}
-	print qq($data_s[$ct-1] a\n);
+	print LOG qq($data_s[$ct-1] a\n);
 	print CONTOURS qq($data_s[$ct-1] \n);
     $q99 = $data_s[$ct-1];
 
@@ -138,7 +139,7 @@ print STDERR qq(Opening $in\n);
 }
 
 elsif ($plot == 2 or $plot == 4) {
-	print STDERR qq(opening $in; writing to $in.log\n);
+	print LOG qq(opening $in; writing to $in.log\n);
 	system qq(perl convert2log.pl $in > $in.log);
 
 	$in = qq($in.log);
@@ -158,7 +159,7 @@ elsif ($plot == 2 or $plot == 4) {
 	while ($sum < ($data_sum*.05) ) {
 		$sum += $data_s[$ct++];
 	}
-	print qq($data_s[$ct-1] a\n);
+	print LOG qq($data_s[$ct-1] a\n);
 	#printf CONTOURS "%.5f\n", $data_s[$ct-1];
 	$q05 = $data_s[$ct-1];
 	print CONTOURS qq(-2\n);
@@ -167,7 +168,7 @@ elsif ($plot == 2 or $plot == 4) {
 	while ( $sum < ($data_sum*.16) ) {
 		$sum += $data_s[$ct++];
 	}
-	print qq($data_s[$ct-1] a\n);
+	print LOG qq($data_s[$ct-1] a\n);
 	#printf CONTOURS "%.5f\n", $data_s[$ct-1];
 	$q15 = $data_s[$ct-1];
 	print CONTOURS qq(-3\n);
@@ -176,7 +177,7 @@ elsif ($plot == 2 or $plot == 4) {
 	while ( $sum < ($data_sum*.33) ) {
 		$sum += $data_s[$ct++];
 	}
-	print qq($data_s[$ct-1] a\n);
+	print LOG qq($data_s[$ct-1] a\n);
 	#printf CONTOURS "%.5f\n", $data_s[$ct-1];
 	$q33 = $data_s[$ct-1];
 	print CONTOURS qq(-4\n);
@@ -185,7 +186,7 @@ elsif ($plot == 2 or $plot == 4) {
 	while ( $sum < ($data_sum*.5) ) {
 		$sum += $data_s[$ct++];
 	}
-	print qq($data_s[$ct-1] a\n);
+	print LOG qq($data_s[$ct-1] a\n);
 	#printf CONTOURS "%.5f\n", $data_s[$ct-1];
 	$q5 = $data_s[$ct-1];
 	print CONTOURS qq(-5\n);
@@ -194,7 +195,7 @@ elsif ($plot == 2 or $plot == 4) {
 	while ( $sum < ($data_sum*.67) ) {
 		$sum += $data_s[$ct++];
 	}
-	print qq($data_s[$ct-1] a\n);
+	print LOG qq($data_s[$ct-1] a\n);
 	#printf CONTOURS "%.5f\n", $data_s[$ct-1];
 	$q67 = $data_s[$ct-1];
 	print CONTOURS qq(-6\n);
@@ -203,7 +204,7 @@ elsif ($plot == 2 or $plot == 4) {
 	while ( $sum < ($data_sum*.84) ) {
 		$sum += $data_s[$ct++];
 	}
-	print qq($data_s[$ct-1] a\n);
+	print LOG qq($data_s[$ct-1] a\n);
 	#printf CONTOURS "%.5f\n", $data_s[$ct-1];
 	$q84 = $data_s[$ct-1];
 	print CONTOURS qq(-7\n);
@@ -212,7 +213,7 @@ elsif ($plot == 2 or $plot == 4) {
 	while ( $sum < ($data_sum*.95) ) {
 		$sum += $data_s[$ct++];
 	}
-	print qq($data_s[$ct-1] a\n);
+	print LOG qq($data_s[$ct-1] a\n);
 	#printf CONTOURS "%.5f\n", $data_s[$ct-1];
 	$q95 = $data_s[$ct-1];
 	print CONTOURS qq(-8\n);
@@ -221,7 +222,7 @@ elsif ($plot == 2 or $plot == 4) {
 	while ( $sum < ($data_sum*.99) ) {
 		$sum += $data_s[$ct++];
 	}
-	print qq($data_s[$ct-1] a\n);
+	print LOG qq($data_s[$ct-1] a\n);
 	#printf CONTOURS "%.6f\n", $data_s[$ct-1];
 	$q99 = $data_s[$ct-1];
 	print CONTOURS qq(-9\n);
