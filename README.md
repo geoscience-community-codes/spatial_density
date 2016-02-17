@@ -10,7 +10,7 @@ Please edit this file first.
 The filename is specified on the command line. To run the script type:
 perl spatial_density.pl spatial_density.conf
 
-DEPENDENCIES: 
+DEPENDENCIES:  
 The script depends on a number of perl modules:
 PDL::Lite
 PDL::Basic
@@ -49,13 +49,13 @@ Mesa-32bit
 libGLw-devel
 Mesa-libGL1/-devel
 
-TROUBLESHOOTING: 
+TROUBLESHOOTING:  
 If there is no output data then check the file: R-samse.Rout
 The R-samse file is an R script and the R-samse.Rout 
 provides information about the SAMSE bandwith calculated using 'R'.
 Also, check the logfile. Check the bandwidth.dat file; the bandwidth should not be all zeros. This indicated a problem with the ks package.
 
-PLOT CONTOURS: 
+PLOT CONTOURS:  
 The PERL script plot_spd.gmt.pl will grid and contour the spatial density output grid file. This script has 4 plotting options:
 Option 0: No plot.
 Option 1:  Quartile plot (WGS84/latlon)
