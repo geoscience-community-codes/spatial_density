@@ -16,9 +16,14 @@
 #    If not, see <http://www.gnu.org/licenses/>.
 ######################################################################
 
-while (<>) {
-	($east, $north, $sd) = split (" ");
-	$log_sd = ($sd>0) ? log($sd)/log(10) : 0;
-	print "$east $north $log_sd\n";
+my $cutoff = $ARGV[1];
+use File::Slurp;
+my @Lines = read_file("$ARGV[0]", chomp => 1); # will chomp() each line
+foreach my $line (@Lines){
+	($east, $north, $sd) = split " ", $line;
+	if ($sd > 0) { $log_sd = log($sd)/log(10);}
+	if ($log_sd < $cutoff) {$log_sd = $cutoff}
+        my $text = sprintf("%0.2f", $log_sd);
+	print "$east $north $text\n";
 
 }
