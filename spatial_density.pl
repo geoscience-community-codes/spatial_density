@@ -43,13 +43,28 @@
 # the SAMSE bandwidth calculated using 'R'
 
 system "date";
-use PDL::Lite;	
+# use PDL::Lite; # Is equivalent to the following:
+ 
+# use PDL::Ops '';
+#  use PDL::Primitive '';
+#  use PDL::Ufunc '';
+#  use PDL::Basic '';
+#  use PDL::Slices '';
+#  use PDL::Bad '';
+#  use PDL::Version;
+
+use PDL::Core '';
+use PDL::Lvalue;
 use PDL::MatrixOps qw(det inv );
 use PDL::Basic qw(transpose);
 use PDL::LinearAlgebra::Trans qw(msqrt);
 
-our $pi = pdl(3.1415926535897932384626433832795029);
+# Import constants pi2, pip2, pip4 (2*pi, pi/2, pi/4).
+use Math::Trig qw(pi);
 
+# our $pi = pdl(3.1415926535897932384626433832795029);
+
+$pi = pi;
 
 my $args = @ARGV;
 if ($args < 1) {
