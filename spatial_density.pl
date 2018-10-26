@@ -32,9 +32,8 @@
 # (also found as packages in YAST)
 
 # Required: the perl module PDL :: Lite 
-#           the perl module PDL::Basic
-#           the perl module PDL::MatrixOps
 #           the perl module PDL::LinearAlgebra 
+#           the perl module PDL::LinearAlgebra::Trans
 # these modules can all be downloaded and installed using CPAN
 
 # If there is no output data then check the file: R-samse.Rout
@@ -64,7 +63,7 @@ use Math::Trig qw(pi);
 
 # our $pi = pdl(3.1415926535897932384626433832795029);
 
-$pi = pi;
+our $pi = pi;
 
 my $args = @ARGV;
 if ($args < 1) {
