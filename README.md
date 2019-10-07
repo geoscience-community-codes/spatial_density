@@ -4,10 +4,11 @@
 This perl script calculates a spatial density or spatial intensity grid (ASCII format) based on a gaussian kernel function using a SAMSE bandwith calculated using the 'ks' package, written by Tarn Duong <tarn.duong at gmail.com> which is a package using the statistical programming language R. 
 
 ### USAGE:  
-This spatial density program requires a configuration file: spatial_density.conf (default)
+This spatial density program requires a configuration file: spatial_density.conf (default name)
 Please edit this file first and then attempt to run the script.
-The filename is specified on the command line. To run the script type:
-perl spatial_density.pl spatial_density.conf
+The configuration file is specified on the command line. To run the script type:
+
+>perl spatial_density.pl spatial_density.conf <
 
 ### DEPENDENCIES:  
 The script depends on a number of perl modules:
