@@ -20,7 +20,9 @@ PDL::LinearAlgebra
 These modules can be downloaded and installed using the perl installation program, 'cpan'.
 To install these modules locally (non-root):
 choose the cpan configuration option: local:lib
->install PDL::Lite (first, then install additional PDL midules)
+
+>install PDL::Lite 
+etc...
 
 This installation could take a long time if you have never installed any packages using cpan.
 
@@ -37,7 +39,9 @@ R-base/-devel
 
 The R package 'ks' is required.
 This package calculates the kernel smoothing bandwith using the SAMSE method by Tarn Duong <tarn.duong at gmail.com>. Install this package from within R (locally, non-root):
+
 >install.packages("ks", repos="http://cran.r-project.org")
+
 then choose to let R create/install into a local directory
 
 The 'ks' package will be downloaded, compiled (gcc needs to be installed), and installed. The 'ks' package also has some dependencies: R version (≥ 1.4.0), KernSmooth (≥ 2.22), misc3d (≥ 0.4-0), mvtnorm (≥ 1.0-0), rgl (≥ 0.66). This are downloaded, compiled and installed automatically.
@@ -76,12 +80,14 @@ Option 1:  Quartile plot (WGS84/latlon)
 Option 2:  Log(output) plot (WGS84/lat/lon
 Option 3:  Quartile plot (UTM/meters)
 Option 4:  Log(output) plot (UTM/meters)
-The quartile plots contour the 5%, 16%, 33%, 50%, 67%, 84%, 95%, and 99% contours of spatial density. GMT version 5 needs to be installed in order to run this script. It depends on the same configuration file as the spatial density calculator (above). If the map size is too large or too small, increase (make map smaller) or decrease (make map larger) the MAP_SCALING number in the spatial_density.conf file. This plotting script is called directly from the spatial density.pl script. You can also run just the plotting script directly from the command line using two additional command parameters: perl plot_spd.gmt.pl spatial_density.conf <your spatial denstiy output file>
+The quartile plots contour the 5%, 16%, 33%, 50%, 67%, 84%, 95%, and 99% contours of spatial density. GMT version 5 needs to be installed in order to run this script. It depends on the same configuration file as the spatial density calculator (above). If the map size is too large or too small, increase (make map smaller) or decrease (make map larger) the MAP_SCALING number in the spatial_density.conf file. This plotting script is called directly from the spatial density.pl script. You can also run just the plotting script directly from the command line using two additional command parameters: 
+
+>perl plot_spd.gmt.pl spatial_density.conf <your spatial denstiy output file>
 
 ### TEST 
 To run a test example, copy the perl scripts (spatial_density.pl, plot_spd.pl, convert2log.pl) into the test directory
 and then run in that directory:
 
-perl spatial_density.pl nejapa_spatial_density.conf
+>perl spatial_density.pl nejapa_spatial_density.conf
 
 Spatial density contour plots should be the result. Look for EPS, PNG and PDF images.
