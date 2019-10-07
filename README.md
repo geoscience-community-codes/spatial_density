@@ -20,7 +20,7 @@ PDL::LinearAlgebra
 These modules can be downloaded and installed using the perl installation program, 'cpan'.
 To install these modules locally (non-root):
 choose the cpan configuration option: local:lib
->install <module> (ex. PDL::Lite)
+>install PDL::Lite (first, then install additional PDL midules)
 
 This installation could take a long time if you have never installed any packages using cpan.
 
