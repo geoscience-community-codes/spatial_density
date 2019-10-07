@@ -1,6 +1,11 @@
+# spatial_density.pl
+#
+# A perl script to calculate a grid of spatial density values based on
+# a smoothing bandwidth and a gaussian kernel.
 
 ######################################################################
-# This file is part of spatial_density.pl.
+#  This file spatial_density.pl 
+#  is part of the spatial density package from Geoscience Community Codes 
 #
 #    spatial_density.pl is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -15,55 +20,76 @@
 #    You should have received a copy of the GNU General Public License
 #    along with spatial_density.pl.
 #    If not, see <http://www.gnu.org/licenses/>.
+# 
+#    Copyright (C) 2010
+#    Laura Connor
 ######################################################################
 
 # This program requires a configuration file
 # usually specified as spatial_density.conf
-# The filename is specified on the command line.
+# This filename is specified on the command line.
 # The code is run as: perl spatial_density.pl spatial_density.conf
 
 # The code outputs an X Y Z file formatted as:
 # easting northing density_value
-
-# If using opensuse linux, install package perl-PDL using YAST
-# then install the perl Linear::Algebra module using cpan
-# The Linear::Algebra module requires the blas and lapack libraries
-# and their corresponding devel packages to be installed
-# (also found as packages in YAST)
-
-# Required: the perl module PDL :: Lite 
+#
+#Requirements:
+# perl programming environment
+# R programming environment (base, core and dev packages)
+# GMT (Generic Mapping Tools) version 5
+# Proj4 (libraries and devel files)
+# ghostview (to make PNG files in GMT)
+#
+# Perl modules
+# Required: the perl module PDL::Lite 
+#           the perl module PDL::Core
+#           the perl module PDL::MatrixOps
+#           the perl module PDL::Basic  
 #           the perl module PDL::LinearAlgebra 
-#           the perl module PDL::LinearAlgebra::Trans
-# these modules can all be downloaded and installed using CPAN
-
-# If there is no output data then check the file: R-samse.Rout
+#
+# these modules can all be downloaded and installed using the
+# the perl module installer:
+# cpan
+#
+# To install these modules locally (non-root)
+# choose the cpan option: local:lib
+#
+# >install <module> (ex. PDL::Lite)
+#
+# The Linear::Algebra module requires that the blas and lapack libraries
+# and their corresponding devel packages also be installed
+#
+# R packages
+# Required: the R package ks
+#
+# this package can be downloaded (locally, non-root) while running:
+#
+# R
+#
+# >install.packages("ks", repos="http://cran.r-project.org")
+#
+# then choose to let R create/install into a local directory
+#
+# Note: When trying to execute the perl script,
+# If there is no file output then check the file: R-samse.Rout
 # The R-samse file is an R script and the R-samse.Rout file
 # provides information about
 # the SAMSE bandwidth calculated using 'R'
+# The bandwidth is output to the file: bandwidth.dat
+#
+# Laura Connor (lconnor@usf.edu; ljconnor@gmail.com)
+# Last updated: October, 2019
+#####################################################################
 
 system "date";
-# use PDL::Lite; # Is equivalent to the following:
- 
-# use PDL::Ops '';
-#  use PDL::Primitive '';
-#  use PDL::Ufunc '';
-#  use PDL::Basic '';
-#  use PDL::Slices '';
-#  use PDL::Bad '';
-#  use PDL::Version;
-
-use PDL::Core '';
-use PDL::Lvalue;
-use PDL::MatrixOps qw(det inv );
+use PDL::Lite;	
+use PDL::Core qw(pdl);
+use PDL::MatrixOps qw(det inv);
 use PDL::Basic qw(transpose);
 use PDL::LinearAlgebra::Trans qw(msqrt);
 
-# Import constants pi2, pip2, pip4 (2*pi, pi/2, pi/4).
-use Math::Trig qw(pi);
+our $pi = pdl 3.1415926535897932384626433832795029;
 
-# our $pi = pdl(3.1415926535897932384626433832795029);
-
-our $pi = pi;
 
 my $args = @ARGV;
 if ($args < 1) {
@@ -206,7 +232,8 @@ my $sqrt_detH = sqrt($detH);
 print LOG "sqrt(Determinant): $sqrt_detH\n";
 
 # inverse of the square root matrix
-our $sqrtHi = inv($sqrtH);
+
+$sqrtHi = inv($sqrtH,{$opt});
 
 # our $sqrtHi = inv($H);
 print LOG "Inverse of Square Root Matrix:$sqrtHi";
@@ -282,7 +309,15 @@ sub gauss() {
   for (my $i = 0; $i < $num_vents; $i++) { # For each event
       # Get distance from event to grid point
       my $dx = ($x - $vents->[$i]->{EAST});
+      # Tested -- not right
+      # $dx *= $dx;
+      # $dx = sqrt($dx);
+      
       my $dy = ($y - $vents->[$i]->{NORTH});
+      # Tested -- not right
+      # $dy *= $dy;
+      # $dy = sqrt($dy);
+      
       # my $dist = sqrt($dx * $dx + $dy * $dy);
       #$sum += exp(-0.5 * ($dist/$h)*($dist/$h));
       # convert to matrix
