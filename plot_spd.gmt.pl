@@ -1,7 +1,10 @@
+# plot_spd.gmt.pl
+
 ######################################################################
-# This file is part of spatial_density.pl.
+#  This file plot_spd.gmt.pl
+#  is part of the spatial density package from Geoscience Community Codes 
 #
-#    spatial_density.pl is free software: you can redistribute it and/or modify
+#    plot_spd.gmt.pl is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
@@ -14,7 +17,32 @@
 #    You should have received a copy of the GNU General Public License
 #    along with spatial_density.pl.
 #    If not, see <http://www.gnu.org/licenses/>.
+# 
+#    Copyright (C) 2010
+#    Laura Connor
 ######################################################################
+
+# This perl script uses GMT (Generic Mapping Tools) and Proj4
+# to contour the spatial density grid values from spatial_density.pl
+# and produce map images (PNG and PDF and ESP formats). 
+#
+# This script is called directly from spatial_density.pl
+# and reads parameter options from the config file:
+# spatial_density.conf (default) 
+#
+# This script uses the perl package Geo::Proj4 which
+# can be downloaded and installed using the program:
+# cpan
+#
+# This script expects 2 commandline parameters:
+# 	config_file 
+# 	spatial_density_grid_file (format = X(m)  Y(m)  Z)
+# 
+# See USAGE statement below.
+#
+# Laura Connor (lconnor@usf.edu; ljconnor@gmail.com) 
+# Last updated: October, 2019
+# ###############################################################
 
 use Geo::Proj4;
 
@@ -71,7 +99,7 @@ my $ct=0;
 my $data_sum = 0;
 
 if ($plot == 1 or $plot == 3) { #Spatial density quartiles (5% 16% 33% 50% 67% 84% 95% 99%
-print LOG qq(Opening $in\n);
+	print LOG qq(Opening $in\n);
 	open(IN, "<$in") || die("can't open $in: $!");
 	while (<IN>) {
 		 ($e, $n, $data[$ct]) = split " ", $_;
@@ -138,24 +166,22 @@ print LOG qq(Opening $in\n);
 	}
 	print LOG qq($data_s[$ct-1]\n);
 	printf CONTOURS qq($data_s[$ct-1]\n);
- $q99 = $data_s[$ct-1];
+	$q99 = $data_s[$ct-1];
 
 	print CPT qq(#\tcpt file created by: $0\n);
 	print CPT qq(#Color_MODEL = RGB\n);
 	print CPT qq(#\n);
-	printf CPT qq(%e\t%s\t%e\t%s\n), $q99, qq(255\t255\t255), $q95, qq(255\t255\t255\tU;99th);
-	printf CPT qq(%e\t%s\t%e\t%s\n), $q95, qq(255\t255\t255), $q84, qq(0\t85\t170\tU;95th);
-	printf CPT qq(%e\t%s\t%e\t%s\n), $q84, qq(0\t85\t170), $q67, qq(0\t170\t85\tU;84th);
-	printf CPT qq(%e\t%s\t%e\t%s\n), $q67, qq(0\t170\t85), $q5, qq(0\t255\t0\tU;67th);
-	printf CPT qq(%e\t%s\t%e\t%s\n), $q5, qq(0\t255\t0), $q33, qq(255\t255\t0\tU;50th);
-	printf CPT qq(%e\t%s\t%e\t%s\n), $q33, qq(255\t255\t0), $q15, qq(255\t195\t0\tU;33rd);
-	printf CPT qq(%e\t%s\t%e\t%s\n), $q15, qq(255\t195\t0), $q05, qq(255\t165\t0\tU;15th);
-	printf CPT qq(%e\t%s\n), $q05, qq(255\t165\t0\t1\t255\t0\t0\tU;5th);
-	printf CPT qq(%s\n),qq(B\t255\t255\t255);
-	printf CPT qq(%s\n), qq(F\t0\t0\t0);
-	printf CPT qq(%s\n), qq(N\t128\t128\t128);
-	
-
+	printf CPT qq(%e\t%s\t%e\t%s\n), $q99, qq(255/255/204), $q95, qq(255/255/204);
+	printf CPT qq(%e\t%s\t%e\t%s\n), $q95, qq(255/237/160), $q84, qq(255/237/160);
+	printf CPT qq(%e\t%s\t%e\t%s\n), $q84, qq(254/217/118), $q67, qq(254/217/118);
+	printf CPT qq(%e\t%s\t%e\t%s\n), $q67, qq(254/178/76), $q5, qq(254/178/76);
+	printf CPT qq(%e\t%s\t%e\t%s\n), $q5, qq(253/141/60), $q33, qq(253/141/60);
+	printf CPT qq(%e\t%s\t%e\t%s\n), $q33, qq(252/78/42), $q15, qq(252/78/42);
+	printf CPT qq(%e\t%s\t%e\t%s\n), $q15, qq(227/26/28), $q05, qq(227/26/28);
+	printf CPT qq(%e\t%s\n), $q05, qq(177/0/38\t1\t177/0/38);
+	printf CPT qq(%s\n),qq(B\t255/255/255);
+	printf CPT qq(%s\n), qq(F\t0/0/0);
+	printf CPT qq(%s\n), qq(N\t128/128/128);
 }
 
 elsif ($plot == 2 or $plot == 4) { #Log(spatial density)
@@ -182,54 +208,22 @@ elsif ($plot == 2 or $plot == 4) { #Log(spatial density)
 	print CONTOURS qq(-7 A\n);
 	print LOG qq(-8\n);
 	print CONTOURS qq(-8 A\n);
-# print LOG qq(-9 a\n);
-# print CONTOURS qq(-9\n);
-#	print LOG qq(-10 a\n);
-# print CONTOURS qq(-10\n);
-#	print LOG qq(-11 a\n);
-#	print CONTOURS qq(-11\n);
-#	print LOG qq(-12 a\n);
-#	print CONTOURS qq(-12\n);
 	
 	printf CPT qq(%s\n\n), qq(# Spatial Density colormap\n# COLOR_MODEL = RGB);
-
-	# printf CPT "%.6f\t%s\t%.5f\t%s\n", $q99, "230\t230\t255", $q95, "230\t230\t255";
-	# printf CPT "%.5f\t%s\t%.5f\t%s\n", $q95, "0\t100\t200", $q84, "0\t100\t200";
-	# printf CPT "%.5f\t%s\t%.5f\t%s\n", $q84, "0\t170\t170", $q67, "0\t170\t170";
-	# printf CPT "%.5f\t%s\t%.5f\t%s\n", $q67, "0\t255\t0", $q5, "0\t255\t0";
-	# printf CPT "%.5f\t%s\t%.5f\t%s\n", $q5, "255\t255\t0", $q33, "255\t255\t0";
-	# printf CPT "%.5f\t%s\t%.5f\t%s\n", $q33, "255\t210\t0", $q15, "255\t210\t0";
-	# printf CPT "%.5f\t%s\t%.5f\t%s\n", $q15, "255\t165\t0", $q05, "255\t165\t0";
-	# printf CPT "%.5f\t%s\n\n", $q05, "235\t0\t0\t1\t235\t0\t0";
-
-
-	# print CPT "0 255 225 255 $q95 255 255 255\n";
-	# print CPT "$q95 255 255 255 $q84 0 85 170\n";
-	# print CPT "$q84 0 85 170 $q67 0 170 85\n";
-	# print CPT "$q67 0 170 85 $q5 0 255 0\n";
-	# print CPT "$q5 0 255 0 $q33 255 255 0\n";
-	# print CPT "$q33 255 255 0 $q15 255 195 0\n";
-	# print CPT "$q15 255 195 0 $q05 255 165 0\n";
-	# print CPT "$q05 255 165 0 1 255 0 0\n\n";
-	# print CPT "B 255 255 255\n";
-	# print CPT "F 255 0 0\n";
-	# print CPT "N 255 255 255\n";
-
 	print CPT qq(#\tcpt file created by: $0\n);
 	print CPT qq(#Color_MODEL = RGB\n);
 	print CPT qq(#\n);
-	printf CPT qq(%.1e\t%s\t%.1e\t%s\n), -8, qq(230\t230\t255), -7, qq(230\t230\t255\t;-8);
-	printf CPT qq(%.1e\t%s\t%.1e\t%s\n), -7, qq(0\t100\t200), -6, qq(0\t100\t200\t;-7);
-	printf CPT qq(%.1e\t%s\t%.1e\t%s\n), -6, qq(0\t170\t170), -5, qq(0\t170\t170\t;-6);
-	printf CPT qq(%.1e\t%s\t%.1e\t%s\n), -5, qq(0\t255\t0), -4, qq(0\t255\t0\t;-5);
-	printf CPT qq(%.1e\t%s\t%.1e\t%s\n), -4, qq(255\t255\t0), -3, qq(255\t255\t0\t;-4);
-	printf CPT qq(%.1e\t%s\t%.1e\t%s\n), -3, qq(255\t210\t0), -2, qq(255\t210\t0\t;-3);
-	printf CPT qq(%.1e\t%s\t%.1e\t%s\n), -2, qq(255\t165\t0), -1, qq(255\t165\t0\t;-2);
-	printf CPT qq(%.1e\t%s\n\n), -1, qq(235\t0\t0\t0\t235\t0\t0\t;-1);
-	printf CPT qq(%s\n),qq(B\t255\t255\t255);
-	printf CPT qq(%s\n), qq(F\t0\t0\t0);
-	printf CPT qq(%s\n), qq(N\t128\t128\t128);
-	
+	printf CPT qq(%e\t%s\t%e\t%s\n), -8, qq(255/255/204), -7, qq(255/255/204);
+	printf CPT qq(%e\t%s\t%e\t%s\n), -7, qq(255/237/160), -6, qq(255/237/160);
+	printf CPT qq(%e\t%s\t%e\t%s\n), -6, qq(254/217/118), -5, qq(254/217/118);
+	printf CPT qq(%e\t%s\t%e\t%s\n), -5, qq(254/178/76), -4, qq(254/178/76);
+	printf CPT qq(%e\t%s\t%e\t%s\n), -4, qq(253/141/60), -3, qq(253/141/60);
+	printf CPT qq(%e\t%s\t%e\t%s\n), -3, qq(252/78/42), -2, qq(252/78/42);
+	printf CPT qq(%e\t%s\t%e\t%s\n), -2, qq(227/26/28), -1, qq(227/26/28);
+	printf CPT qq(%e\t%s\n), -1, qq(177/0/38\t0\t177/0/38);
+	printf CPT qq(%s\n),qq(B\t255/255/255);
+	printf CPT qq(%s\n), qq(F\t0/0/0);
+	printf CPT qq(%s\n), qq(N\t128/128/128);
 }
 
 close CONTOURS; 
@@ -253,7 +247,7 @@ if ($plot == 1 or $plot == 2) { # Longitude/Latitude
 	
 	$out = qq($in.eps);
 	`gmt surface \`gmt gmtinfo -I- $in \` $in  -Gsurface.grd -I$gs -V`;
-	`gmt makecpt -C$cpt -V > grid.cpt `;
+	`gmt makecpt -C$cpt -W -V > grid.cpt `;
 	`gmt gmtset --FORMAT_GEO_MAP=-ddd.xx`;
 	`gmt grdimage surface.grd -R -Cgrid.cpt -Jm$scale -E$res -X1i -Y1i  -V -K -P > $out`;
 	`gmt grdcontour surface.grd -Ccontours -S2 -Gn1 -W.5p,0 -Jm -R -V -K -O >> $out`;
@@ -263,7 +257,7 @@ if ($plot == 1 or $plot == 2) { # Longitude/Latitude
 	
 	my $tick_sp = 1 * $P{TICK_SCALE};
 	
-	`gmt psbasemap --FONT_ANNOT_PRIMARY=8p --MAP_FRAME_TYPE=plain -Jm -R -Bxa$tick_sp -Bya$tick_sp -BWSne+t"$title" -V -O -K >> $out`;
+	`gmt psbasemap --FONT_ANNOT_PRIMARY=8p --MAP_FRAME_TYPE=plain --FORMAT_GEO_MAP=-ddd.xx -Jm -R -Bxa$tick_sp -Bya$tick_sp -BWSne+t"$title" -V -O -K >> $out`;
 	
 	if ($plot == 2) {
 	  $float = "%.0f";
@@ -282,7 +276,7 @@ elsif ($plot == 3 or $plot ==4) { # UTM meters
 	$gs = $grid_spacing;
 	$out = qq($in.eps);
 	`gmt xyz2grd \`gmt gmtinfo -I- $in \` $in -I$gs -Gsurface.grd -V`;
-	`gmt makecpt -C$cpt -V > grid.cpt `;	
+	`gmt makecpt -C$cpt -W -V > grid.cpt `;	
 	`gmt grdimage surface.grd -R -Cgrid.cpt -Jx$scale -E$res -X1i -Y1i -V -K -P > $out`;
 	`gmt grdcontour surface.grd -Ccontours -S2 -Gn1 -W.5p,0 -Jx -R -V -K -O >> $out`;
 	`gmt psxy $events -Jx -Sc.1c -R -Gwhite -W.25p,0 -N -O -K -V >> $out`;
@@ -292,8 +286,9 @@ elsif ($plot == 3 or $plot ==4) { # UTM meters
 		`gmt pstext $aoi -Jm -R -D0/-.14 -G0 -O -K -V >> $out`;
 	}
 
-my $tick_sp = 10000 * $P{TICK_SCALE};
-`gmt psbasemap --FONT_ANNOT_PRIMARY=7p --MAP_FRAME_TYPE=plain -Jx -R -Bxa$tick_sp -Bya$tick_sp -BWSne+t"$title" -V -O -K >> $out`;
+	my $tick_sp = 10000 * $P{TICK_SCALE};
+	`gmt psbasemap --FONT_ANNOT_PRIMARY=7p --MAP_FRAME_TYPE=plain -Jx -R -Bxa$tick_sp -Bya$tick_sp -BWSne+t"$title" -V -O -K >> $out`;
+
 if ($plot == 4) {
 	  $float = "%.0f";
 	  $sc_title = "Log of spatial density";
@@ -304,18 +299,9 @@ if ($plot == 4) {
 	  $sc_title = "Spatial Density";
 	  $unit = "vents / \@~D\@~x\@~D\@~y";
 	}
-`gmt psscale --FORMAT_FLOAT_MAP=$float --FONT_ANNOT_PRIMARY=6p --FONT_LABEL=6p -DjTR+w4.5c/0.2c+o0.6/1c+ma -Li -Bx+l"$sc_title" -By+l"$unit" -Cgrid.cpt -R -Jx -O -V >> $out`;
-}
-`gmt psconvert $out -A -Tg -V`;
-`gmt psconvert $out -A -Tf -V`;
-exit(0);
 
-# NOT IMPLEMENTED YET >>>
-	# Only add DEM if grd file exists
-	unless (-e $grd) {
-		# Only process intensity file if it does not exist
-		unless ( -e $int) {
-			`gmt grdgradient $grd -G$int -R$west/$east/$south/$north -E-80/20/.5/.2/.2/100 -Nt0.5 -V `;
-		}
-		`gmt grdimage $grd -C$cpt -Jm$scale -I$int -R$west/$east/$south/$north -E$res -Ba50000 -BWSen -P -K > $out`;
-	}	
+	`gmt psscale --FORMAT_FLOAT_MAP=$float --FONT_ANNOT_PRIMARY=6p --FONT_LABEL=6p -DjTR+w4.5c/0.2c+o0.6/1c+ma -Li -Bx+l"$sc_title" -By+l"$unit" -Cgrid.cpt -R -Jx -O -V >> $out`;
+}
+`gmt psconvert $out -A -Tg -V`; # Plot PNG image
+`gmt psconvert $out -A -Tf -V`; # Plot PDF image
+
