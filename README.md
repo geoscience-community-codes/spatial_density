@@ -81,13 +81,13 @@ The plotting scripts depend on 2 additional perl packages which can be installed
 Geo::Proj4 (this requires Proj4, its libs, programs, and devel files)
 File::Slurp
 
-### TROUBLESHOOTING:  
+### TROUBLESHOOTING  
 If there is no file output then check the file: R-samse.Rout
 The R-samse file is an R script and the R-samse.Rout 
 provides information about the SAMSE bandwith calculated using 'R'.
 Also, check the logfile. Check the bandwidth.dat file; the bandwidth should not be all zeros. This indicated a problem with the ks package.
 
-### PLOT CONTOURS:  
+### PLOT CONTOURS  
 This script has 4 plotting options:
   * Option 0: No plot.
   * Option 1:  Quartile plot (WGS84/latlon)
