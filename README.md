@@ -12,19 +12,19 @@ Please edit this config file first with information about your vent locations an
 Successfull script execution depends on first installing some perl packages, R packages, and some additional programs and libraries.
 
 #### INSTALL THESE DEPENDENCIES FIRST
-A C-code and fortran code compiler are necessary to compile codes. These are usually installed by the admin or root user and available to all users. These are free and avaiable for all linux systems. Make sure you have the complete gcc suite of program compilers installed including, 
+A C-code and fortran code compiler are necessary to compile codes. These are usually installed by the admin or root user and available to all users. These are free and available for all linux systems. Make sure you have the complete gcc suite of program compilers installed including, 
 -  gcc, gcc++, gfortran
 
 Some specialized linear algebra libraries are also needed. These libraries have been optimized for speed. These are usually installed by an admin or root user.
 Also have the corresponding devel packages installed,
 -  blas, lapack, lapacke, armadillo, quadmath  
 
-These next three programs could be installed by the root or admin user or installed locally. Usually if a program is avaialable from a linked linux repository, it is easier to install into the system by a root user. But, it is possible to install these programs locally. Most linux distributions have pre-compiled packages for these programs; check your ditribution's package repositories. Otherwise, see their corresponding websites for more information:
+These next three programs could be installed by the root or admin user or installed locally. Usually if a program is available from a linked linux repository, it is easier to install into the system by a root user, but, it is possible to install these programs locally. Most linux distributions have pre-compiled packages for these programs; check your distribution's package repositories. Otherwise, see these corresponding websites for more information:
 -  gmt (version 5, http://gmt.soest.hawaii.edu/projects/gmt/wiki/Installing )
 -  Proj/Proj4 (executables, libraries, devel packages, https://live.osgeo.org/en/overview/proj4_overview.html )
 -  R Statistical Programming Environment (R-base, R-devel, etc, https://www.r-project.org )
 
-The additional dependencies can be easily installed locally into your home directory.
+The following additional dependencies can be installed locally into your home directory.
 
 ### perl script DEPENDENCIES 
 The script depends on a number of perl modules:
@@ -44,7 +44,7 @@ To install these modules locally (non-root):
 Once cpan is configured attempt to install each PDL module, individually. 
 >cpan> install PDL::Lite
 
-This installation might fail initally, if some dependencies are missing. Keep careful watch of the output for clues for missing libraries or other perl dependencies. The failure message is usually near the end of the output. Required perl packages are installed automatically. If a system library is needed, install this library and then retry the cpan install. Sometimes, it is necessay to type:
+This installation might fail initally, if some dependencies are missing. Keep careful watch of the output for clues for missing system libraries or other perl packages. The failure message is usually near the end of the output. Required perl packages are often installed automatically. If a system library is needed, install this library and then retry the cpan installation. Sometimes, it is necessay to type:
 >clean <module-name>
   
 before trying to install a second time. This installation could take a long time if you have never installed any packages using cpan. A '?' at the cpan prompt gives the cpan help menu: 
@@ -52,7 +52,7 @@ before trying to install a second time. This installation could take a long time
 
 ### R DEPENDENCIES
 The R package 'ks' is required.
-This package calculates the kernel smoothing bandwith using the SAMSE method by Tarn Duong <tarn.duong at gmail.com>. The 'ks' package will be downloaded, compiled (gcc needs to be installed for this), and installed. The 'ks' package also has some dependencies: R version (≥ 1.4.0), KernSmooth (≥ 2.22), misc3d (≥ 0.4-0), mvtnorm (≥ 1.0-0), rgl (≥ 0.66). These packages are downloaded, compiled and installed automatically.
+This package calculates the kernel smoothing bandwith using the SAMSE method by Tarn Duong <tarn.duong at gmail.com>. The 'ks' package will be downloaded, compiled (gcc needs to be installed for this), and installed. The 'ks' package also has some dependencies: R version (≥ 1.4.0), KernSmooth (≥ 2.22), misc3d (≥ 0.4-0), mvtnorm (≥ 1.0-0), rgl (≥ 0.66). The dependent packages are downloaded, compiled and installed automatically.
 
 Additional system libraries MIGHT be required for the 'ks' package. Please watch the screen output for clues and install as necessary. I have installed these packages in OPENSUSE to get the 'rgl' package to compile: libpng16-16/-devel, libpng12-0, libpng16-compat-devel, libX11-6/-devel, libx11-data, libX11-6-32bit, libglut3, freeglut-devel, Mesa/-devel, Mesa-32bit, libGLw-devel, Mesa-libGL1/-devel
 
@@ -63,11 +63,11 @@ then follow with:
 
 >install.packages("ks", repos="http://cran.r-project.org")
 
-then choose to let R create/install into a local directory
+then choose to let R create/install into a local directory.
 
 ### GMT plotting DEPENDENCIES
 The PERL script plot_spd.gmt.pl will grid and contour the spatial density output grid file. This plotting package depends
-on gmt (which depends on gdal, netcdf, Proj4)
+on GMT (which depends on gdal, netcdf, Proj/Proj4)
 
 The plotting scripts depend on 2 additional perl packages which can be installed with cpan:
 Geo::Proj4 (this requires Proj4, its libs, programs, and devel files)
@@ -80,7 +80,6 @@ provides information about the SAMSE bandwith calculated using 'R'.
 Also, check the logfile and the bandwidth.dat file; the bandwidth.dat should not be all zeros. This indicated a problem with executing the 'ks' package.
 
 ### PLOTTING CONTOURS AND CREATING IMAGES
-  
 The plotting script, plot_spd.gmt.pl, depends on the same spatial_density.conf configuration file.
 
 There are 4 plotting options:
