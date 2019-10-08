@@ -15,7 +15,7 @@ The configuration file is specified on the command line. To run the script type:
 Successfull script execution depends on some additonal programs and libraries. 
 First, make sure you have installed the complete gcc suite of compilers (including, gcc. gfortran, gcc++, etc), the linear algebra libraries, blas, lapack, lapacke, armadillo, quadmath (and their corresponding devel packages), gmt (version 5), Proj4 (executables, libraries, devel packages), the R Statistical Programming Environment (R-base, R-devel, etc),
 
-### perl script DEPENDENCIES: 
+### perl script DEPENDENCIES 
 The script depends on a number of perl modules:
 PDL::Lite
 PDL::Core
@@ -44,7 +44,7 @@ before trying to install a second time. This installation could take a long time
 
 A '?' at the cpan prompt gives the help menu. 
 
-### R DEPENDENCIES:
+### R DEPENDENCIES
 The R package 'ks' is required.
 This package calculates the kernel smoothing bandwith using the SAMSE method by Tarn Duong <tarn.duong at gmail.com>. 
 
