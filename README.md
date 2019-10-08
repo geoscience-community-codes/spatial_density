@@ -17,11 +17,11 @@ First, make sure you have installed the complete gcc suite of compilers (includi
 
 ### perl script DEPENDENCIES 
 The script depends on a number of perl modules:
-PDL::Lite
-PDL::Core
-PDL::MatrixOps
-PDL::Basic
-PDL::LinearAlgebra
+>install PDL::Lite
+>install PDL::Core
+>install PDL::MatrixOps
+>install PDL::Basic
+>install PDL::LinearAlgebra
 
 These modules can be downloaded and installed using the perl installation program:
 
