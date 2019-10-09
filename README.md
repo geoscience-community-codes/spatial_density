@@ -9,7 +9,10 @@ Please edit this config file first with information about your vent locations an
 
 >perl spatial_density.pl spatial_density.conf
 
-Successfull script execution depends on first installing some perl packages, R packages, and some additional programs and libraries.
+Successfull script execution depends on first installing some perl packages, R packages, and some additional programs and libraries. One way to check if a system package is installed is to use the search command from a package manager (i.e., zypper, yum, apt, etc). For example, OPENSUSE uses the package manager, zypper. To check for the existence of a package installed with zypper, type:
+>zypper se package-name
+
+Installed packages will be identified by an 'i' or '+'.
 
 #### INSTALL THESE DEPENDENCIES FIRST
 A C-code and fortran code compiler are necessary to compile codes. These are usually installed by the admin or root user and available to all users. These are free and available for all linux systems. Make sure you have the complete gcc suite of program compilers installed including, 
@@ -19,11 +22,12 @@ To check if these compilers are installed on your system type:
 >gcc -v
 >gfortran -v
 
-Some specialized linear algebra libraries are also needed. These libraries have been optimized for speed. These are usually installed by an admin or root user.
-Also have the corresponding devel packages installed,
+Some specialized linear algebra libraries are also needed. These libraries have been optimized for speed. These are usually installed by an admin or root user. 
 -  blas, lapack, lapacke, armadillo, quadmath  
 
-These next three programs could be installed by the root or admin user or installed locally. Usually if a program is available from a linked linux repository, it is easier to install into the system by a root user, but, it is possible to install these programs locally. Most linux distributions have pre-compiled packages for these programs; check your distribution's package repositories. Otherwise, see these corresponding websites for more information:
+Use a package manager to check for their existence. Also have the corresponding devel packages installed.
+
+These next three programs could be installed by the root or admin user or installed locally. Usually if a program is available from a linked linux repository, it is easier to install into the system by a root user, but, it is possible to install these programs locally. Most linux distributions have pre-compiled packages for these programs; check your distribution's packages. Otherwise, see these corresponding websites for more information:
 -  gmt (version 5, http://gmt.soest.hawaii.edu/projects/gmt/wiki/Installing )
 -  Proj/Proj4 (executables, libraries, devel packages, https://live.osgeo.org/en/overview/proj4_overview.html )
 -  R Statistical Programming Environment (R-base, R-devel, etc, https://www.r-project.org )
