@@ -15,6 +15,10 @@ Successfull script execution depends on first installing some perl packages, R p
 A C-code and fortran code compiler are necessary to compile codes. These are usually installed by the admin or root user and available to all users. These are free and available for all linux systems. Make sure you have the complete gcc suite of program compilers installed including, 
 -  gcc, gcc++, gfortran
 
+To check if these compilers are installed on your system type:
+>gcc -v
+>gfortran -v
+
 Some specialized linear algebra libraries are also needed. These libraries have been optimized for speed. These are usually installed by an admin or root user.
 Also have the corresponding devel packages installed,
 -  blas, lapack, lapacke, armadillo, quadmath  
