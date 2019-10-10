@@ -20,6 +20,7 @@ A C-code and fortran code compiler are necessary to compile codes. These are usu
 
 To check if these compilers are installed on your system type:
 >gcc -v
+
 >gfortran -v
 
 Some specialized linear algebra libraries are also needed. These libraries have been optimized for speed. These are usually installed by an admin or root user. 
