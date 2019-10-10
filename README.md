@@ -54,7 +54,7 @@ Once cpan is configured attempt to install each PDL module, individually.
 >cpan> install PDL::Lite
 
 This installation might fail initally, if some dependencies are missing. Keep careful watch of the output for clues for missing system libraries or other perl packages. The failure message is usually near the end of the output. Required perl packages are often installed automatically. If a system library is needed, install this library and then retry the cpan installation. Sometimes, it is necessay to type:
->clean <module-name>
+>cpan> clean module-name
   
 before trying to install a second time. This installation could take a long time if you have never installed any packages using cpan. A '?' at the cpan prompt gives the cpan help menu: 
 >cpan> ?
