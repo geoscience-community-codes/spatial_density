@@ -26,7 +26,7 @@ To check if these compilers are installed on your system type:
 Some specialized linear algebra libraries are also needed. These libraries have been optimized for speed. These are usually installed by an admin or root user. Also install the devel versions of these libraries (eg., blas-devel).
 -  blas, lapack, lapacke, armadillo, quadmath, hdf, gd, perl-PDL (if available)  
 
-Use a package manager to check for their existence. Also have the corresponding devel packages installed.
+Use a package manager to check for their existence. Don't forget to also install the devel verions of the libraries.
 
 These next three programs could be installed by the root or admin user or installed locally. Usually if a program is available from a linked linux repository, it is easier to install into the system by a root user, but, it is possible to install these programs locally. Most linux distributions have pre-compiled packages for these programs; check your distribution's packages. Otherwise, see these corresponding websites for more information:
 -  gmt (version 5, http://gmt.soest.hawaii.edu/projects/gmt/wiki/Installing )
