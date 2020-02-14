@@ -110,6 +110,6 @@ To run a test example, COPY the perl scripts (spatial_density.pl, plot_spd.pl, c
 and then execute in the test directory directory:
 >perl spatial_density.pl nejapa_spatial_density.conf
 
-Spatial density contour plots should be the result. Look for EPS, PNG and PDF images.
+Spatial density contour plots should be the result. Look for EPS, PNG and PDF images. A colorblind-friendly palette is used for the plots. 
 
 This is just a guide as all linux distributions operate differently. Any questions can be directed to Laura Connor (lconnor@usf.edu) or Charles Connor (cbconnor@usf.edu).
