@@ -23,8 +23,8 @@ To check if these compilers are installed on your system type:
 
 >gfortran -v
 
-Some specialized linear algebra libraries are also needed. These libraries have been optimized for speed. These are usually installed by an admin or root user. 
--  blas, lapack, lapacke, armadillo, quadmath  
+Some specialized linear algebra libraries are also needed. These libraries have been optimized for speed. These are usually installed by an admin or root user. Also install the devel versions of these libraries (eg., blas-devel).
+-  blas, lapack, lapacke, armadillo, quadmath, hdf, gd, perl-PDL (if available)  
 
 Use a package manager to check for their existence. Also have the corresponding devel packages installed.
 
@@ -33,7 +33,7 @@ These next three programs could be installed by the root or admin user or instal
 -  Proj/Proj4 (executables, libraries, devel packages, https://live.osgeo.org/en/overview/proj4_overview.html )
 -  R Statistical Programming Environment (R-base, R-devel, etc, https://www.r-project.org )
 
-The following additional dependencies can be installed locally into your home directory.
+The following additional dependencies can be installed by root/admin or locally into your home directory. 
 
 ### perl script DEPENDENCIES 
 The script depends on a number of perl modules:
@@ -43,21 +43,23 @@ The script depends on a number of perl modules:
   * PDL::Basic
   * PDL::LinearAlgebra
 
-These modules can be downloaded and installed using the perl installation program:
+If perl-PDL is avaiable as a package for your linux distribution (as mentioned above), then only PDL::LinearAlgebra needs to be installed. Presently, PDL::Lite includes the Core, MatrixOps, and Basic modules. This could change! Perl modules can be downloaded and installed using the perl installation program:
 >cpan
 
-To install these modules locally (non-root):
+A useful perl module to install FIRST is readline. This module will allow you to use your UP-arrow key to view your command history at the cpan prompt (useful if you need to re-run commands!). To install perl modules locally (non-root):
 
   choose the cpan configuration option: local:lib
-
-Once cpan is configured attempt to install each PDL module, individually. 
->cpan> install PDL::Lite
 
 This installation might fail initally, if some dependencies are missing. Keep careful watch of the output for clues for missing system libraries or other perl packages. The failure message is usually near the end of the output. Required perl packages are often installed automatically. If a system library is needed, install this library and then retry the cpan installation. Sometimes, it is necessay to type:
 >cpan> clean module-name
   
 before trying to install a second time. This installation could take a long time if you have never installed any packages using cpan. A '?' at the cpan prompt gives the cpan help menu: 
 >cpan> ?
+
+If you are capable, you could type:
+>cpan> look module-name
+
+and work in the perl build directory directly. Type exit to get back to the cpan prompt.
 
 ### R DEPENDENCIES
 The R package 'ks' is required.
@@ -72,7 +74,7 @@ then follow with:
 
 >install.packages("ks", repos="http://cran.r-project.org")
 
-then choose to let R create/install into a local directory.
+you can choose to let R create/install into a local directory, if you do not have root/admin access.
 
 ### GMT plotting DEPENDENCIES
 The PERL script plot_spd.gmt.pl will grid and contour the spatial density output grid file. This plotting package depends
