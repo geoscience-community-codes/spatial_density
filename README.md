@@ -9,7 +9,7 @@ Please, first edit this config file with information about your vent locations a
 
 ### INSTALL THESE DEPENDENCIES FIRST
 
-#### C COMPILER
+#### C Compiler
 A C-code compiler is necessary to compile the code. gcc is free and available for all linux systems; usually installed by the root user. Make sure you have the complete gcc suite of program compilers installed including, 
 -  gcc, gcc++
 
@@ -19,7 +19,7 @@ To check if this compiler is installed on your system type:
 #### A garbage collector for C and C++
 An improved memory management library is used, The Boehm–Demers–Weiser garbage collector, often known as Boehm GC or simply called, gc. On opensuse, this library is called gc-devel and libgc1. The library is most easily installed via a package manager for your system. For information see: https://www.hboehm.info/gc/index.html
 
-#### R DEPENDENCIES
+#### R Dependencies
 The R package 'ks' is required.
 This package calculates the kernel smoothing bandwith using the SAMSE method by Tarn Duong <tarn.duong at gmail.com>. The 'ks' package will be downloaded, compiled (gcc needs to be installed for this), and installed. The 'ks' package also has some dependencies: R version (≥ 1.4.0), KernSmooth (≥ 2.22), misc3d (≥ 0.4-0), mvtnorm (≥ 1.0-0), rgl (≥ 0.66). The dependent packages are downloaded, compiled and installed automatically.
 
@@ -39,7 +39,7 @@ To compile the code type:
 >gcc -Wall -o sd -lm -lgc spatial_density.c
 
 
-### ADDITIONAL DEPENDENCIES
+### Additional Dependencies
 These next three programs could be installed by the root or admin user or installed locally. Usually if a program is available from a linked linux repository, it is easier to install into the system by a root user, but, it is possible to install these programs locally. Most linux distributions have pre-compiled packages for these programs; check your distribution's packages. 
 
 One way to check if a system package is installed is to use the search command from a package manager (i.e., zypper, yum, apt, etc). For example, OPENSUSE uses the package manager, zypper. To check for the existence of a package installed with zypper, type:
@@ -58,7 +58,7 @@ To run the compiled spatial density code type:
 >./sd spatial_density.conf
 
 
-### GMT plotting DEPENDENCIES
+### GMT plotting Dependencies
 The PERL script plot_spd.gmt.pl will grid and contour the spatial density output grid file. This plotting package depends
 on GMT (which depends on gdal, netcdf, Proj)
 
@@ -66,13 +66,13 @@ The plotting scripts also depends on 2 additional perl packages which can be ins
 Geo::Coordinates::UTM 
 File::Slurp
 
-### TROUBLESHOOTING FAILURE TO GET OUTPUT
+### TROUBLESHOOTING: failure to get any output
 If there is no file output then check the file: R-samse.Rout. 
 The R-samse file is an R script and the R-samse.Rout file 
 provides information about the SAMSE bandwith calculated using 'R'.
 Also, check the logfile and the bandwidth.dat file; the bandwidth.dat should not be all zeros. This indicated a problem with executing the 'ks' package.
 
-### PLOTTING CONTOURS AND CREATING IMAGES
+### PLOTTING contours and creating images
 The plotting script, plot_spd.gmt.pl, depends on the same spatial_density.conf configuration file.
 
 There are 4 plotting options:
