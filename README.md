@@ -17,7 +17,7 @@ To check if this compiler is installed on your system type:
 >gcc -v
 
 #### A garbage collector for C and C++
-An improved memory management library is used, The Boehm–Demers–Weiser garbage collector, often simply known as Boehm GC or simply gc. On opensuse this library is called gc-devel and libgc1. The library is most easily installed via a package manager for your system. For information see: https://www.hboehm.info/gc/index.html
+An improved memory management library is used, The Boehm–Demers–Weiser garbage collector, often known as Boehm GC or simply called, gc. On opensuse, this library is called gc-devel and libgc1. The library is most easily installed via a package manager for your system. For information see: https://www.hboehm.info/gc/index.html
 
 #### R DEPENDENCIES
 The R package 'ks' is required.
