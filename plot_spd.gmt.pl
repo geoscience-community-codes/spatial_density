@@ -9,29 +9,30 @@
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
-#    spatial_density.pl is distributed in the hope that it will be useful,
+#    the spatial_density code is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 #
 #    You should have received a copy of the GNU General Public License
-#    along with spatial_density.pl.
+#    along with spatial_density.c
 #    If not, see <http://www.gnu.org/licenses/>.
 # 
 #    Copyright (C) 2010
 #    Laura Connor
 ######################################################################
 
-# This perl script uses GMT (Generic Mapping Tools) and Proj4
-# to contour the spatial density grid values from spatial_density.pl
-# and produce map images (PNG and PDF and ESP formats). 
+# This perl script uses GMT (Generic Mapping Tools) and Proj
+# to contour the spatial density grid values from the spatial_density
+# executable and produce map images (PNG and PDF and ESP formats). 
 #
-# This script is called directly from spatial_density.pl
+# This script is called directly from the spatial_density executable
 # and reads parameter options from the config file:
 # spatial_density.conf (default) 
 #
-# This script uses the perl package Geo::Proj4 which
-# can be downloaded and installed using the program:
+# This script uses the perl package 
+# Geo::Coordinates::UTM
+# which can be downloaded and installed using the program:
 # cpan
 #
 # This script expects 2 commandline parameters:
@@ -44,7 +45,8 @@
 # Last updated: October, 2019
 # ###############################################################
 
-use Geo::Proj4;
+# use Geo::Proj4;
+use Geo::Coordinates::UTM;
 
 my $args = @ARGV;
 if ($args < 1) {
@@ -233,9 +235,11 @@ close CPT;
 if ($plot == 1 or $plot == 2) { # Longitude/Latitude
 	
 	# Convert to  long / lat
-	my $proj = Geo::Proj4->new(proj => qq(utm), ellps => qq(WGS84), datum => qq(WGS84), zone => $utm_zone );
-	my ($south, $west) = $proj->inverse($utm_west, $utm_south);
-	my ($north, $east) = $proj->inverse($utm_east, $utm_north); 
+	# my $proj = Geo::Proj4->new(proj => qq(utm), ellps => qq(WGS84), datum => qq(WGS84), zone => $utm_zone );
+	my ($south, $west) = utm_to_latlon($ellipsoid, $zone, $utm_west, $utm_south);
+	# my ($latitude,$longitude)=utm_to_latlon($ellipsoid,$zone,$easting,$northing);
+	my ($north, $east) = utm_to_latlon($ellipsoid, $zone, $utm_east, $utm_north); 
+	# my ($latitude,$longitude)=utm_to_latlon($ellipsoid,$zone,$easting,$northing);
 	# .009259259 degree spacing for 100m
 	# .008333 degree for 90m
 	my $gs = (0.000092222 * $grid_spacing/4);
@@ -304,4 +308,4 @@ if ($plot == 4) {
 }
 `gmt psconvert $out -A -Tg -V`; # Plot PNG image
 `gmt psconvert $out -A -Tf -V`; # Plot PDF image
-
+`rm surface.grd grid.cpt gmt.history colort.cpt`;
