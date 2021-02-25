@@ -3,8 +3,9 @@
 ### OVERVIEW 
 This is the C version of spatial_density.pl, which calculates a spatial density or spatial intensity grid (ASCII format) based on a gaussian kernel function using a SAMSE bandwith calculated using the 'ks' package, written by Tarn Duong <tarn.duong at gmail.com> which is a package using the statistical programming language R. 
 
-spatial_density.c (sd) was developed on a linux system (although the C code is basic and should also run on Windows) and uses a configuration file: spatial_density.conf (default name)
-Please edit this config file first with information about your vent locations and then attempt to run the code. The configuration file is specified on the command line. You may change it's name.
+spatial_density.c (sd) was developed on a linux system (although, the C code is basic and should also run on Windows) and uses a configuration file, spatial_density.conf (default name)
+
+Please, first edit this config file with information about your vent locations and then attempt to run the code. The configuration file is specified on the command line. You may change it's name.
 
 ### INSTALL THESE DEPENDENCIES FIRST
 
@@ -12,7 +13,7 @@ Please edit this config file first with information about your vent locations an
 A C-code compiler is necessary to compile the code. gcc is free and available for all linux systems; usually installed by the root user. Make sure you have the complete gcc suite of program compilers installed including, 
 -  gcc, gcc++
 
-To check if these compilers are installed on your system type:
+To check if this compiler is installed on your system type:
 >gcc -v
 
 #### R DEPENDENCIES
@@ -32,7 +33,7 @@ you can choose to let R create/install into a local directory, if you do not hav
 
 ### Compile the C Code
 To compile the code type:
->gcc -Wall -o sp -lm -lgc spatial_density.c
+>gcc -Wall -o sd -lm -lgc spatial_density.c
 
 
 ### ADDITIONAL DEPENDENCIES
@@ -49,10 +50,9 @@ Otherwise, see the corresponding websites for more information:
 -  R Statistical Programming Environment (R-base, R-devel, etc, https://www.r-project.org )
 
 
-
 #### USAGE
 To run the compiled spatial density code type:
->./sp spatial_density.conf
+>./sd spatial_density.conf
 
 
 ### GMT plotting DEPENDENCIES
