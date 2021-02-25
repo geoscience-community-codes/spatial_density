@@ -1,67 +1,21 @@
 # Read Me First
 
 ### OVERVIEW 
-This perl script calculates a spatial density or spatial intensity grid (ASCII format) based on a gaussian kernel function using a SAMSE bandwith calculated using the 'ks' package, written by Tarn Duong <tarn.duong at gmail.com> which is a package using the statistical programming language R. 
+This is the C version of spatial_density.pl, which calculates a spatial density or spatial intensity grid (ASCII format) based on a gaussian kernel function using a SAMSE bandwith calculated using the 'ks' package, written by Tarn Duong <tarn.duong at gmail.com> which is a package using the statistical programming language R. 
 
-### USAGE  
-spatial_density.pl runs on linux systems and uses a configuration file: spatial_density.conf (default name)
-Please edit this config file first with information about your vent locations and then attempt to run the script. The configuration file is specified on the command line. To run the script type:
+spatial_density.c (sd) was developed on a linux system (although the C code is basic and should also run on Windows) and uses a configuration file: spatial_density.conf (default name)
+Please edit this config file first with information about your vent locations and then attempt to run the code. The configuration file is specified on the command line. You may change it's name.
 
->perl spatial_density.pl spatial_density.conf
+### INSTALL THESE DEPENDENCIES FIRST
 
-Successfull script execution depends on first installing some perl packages, R packages, and some additional programs and libraries. One way to check if a system package is installed is to use the search command from a package manager (i.e., zypper, yum, apt, etc). For example, OPENSUSE uses the package manager, zypper. To check for the existence of a package installed with zypper, type:
->zypper se package-name
-
-Installed packages will be identified by an 'i' or '+'.
-
-#### INSTALL THESE DEPENDENCIES FIRST
-A C-code and fortran code compiler are necessary to compile codes. These are usually installed by the admin or root user and available to all users. These are free and available for all linux systems. Make sure you have the complete gcc suite of program compilers installed including, 
--  gcc, gcc++, gfortran
+#### C COMPILER
+A C-code compiler is necessary to compile the code. gcc is free and available for all linux systems; usually installed by the root user. Make sure you have the complete gcc suite of program compilers installed including, 
+-  gcc, gcc++
 
 To check if these compilers are installed on your system type:
 >gcc -v
 
->gfortran -v
-
-Some specialized linear algebra libraries are also needed. These libraries have been optimized for speed. These are usually installed by an admin or root user. Also install the devel versions of these libraries (eg., blas-devel).
--  blas, lapack, lapacke, armadillo, quadmath, hdf, gd, perl-PDL (if available)  
-
-Use a package manager to check for their existence. Don't forget to also install the devel verions of the libraries.
-
-These next three programs could be installed by the root or admin user or installed locally. Usually if a program is available from a linked linux repository, it is easier to install into the system by a root user, but, it is possible to install these programs locally. Most linux distributions have pre-compiled packages for these programs; check your distribution's packages. Otherwise, see these corresponding websites for more information:
--  gmt (version 5, http://gmt.soest.hawaii.edu/projects/gmt/wiki/Installing )
--  Proj/Proj4 (executables, libraries, devel packages, https://live.osgeo.org/en/overview/proj4_overview.html )
--  R Statistical Programming Environment (R-base, R-devel, etc, https://www.r-project.org )
-
-The following additional dependencies can be installed by root/admin or locally into your home directory. 
-
-### perl script DEPENDENCIES 
-The script depends on a number of perl modules:
-  * PDL::Lite
-  * PDL::Core
-  * PDL::MatrixOps
-  * PDL::Basic
-  * PDL::LinearAlgebra
-
-If perl-PDL is avaiable as a package for your linux distribution (as mentioned above), then only PDL::LinearAlgebra needs to be installed. Presently, PDL::Lite includes the Core, MatrixOps, and Basic modules. This could change! Perl modules can be downloaded and installed using the perl installation program:
->cpan
-
-A useful perl module to install FIRST is readline. This module will allow you to use your UP-arrow key to view your command history at the cpan prompt (useful if you need to re-run commands!). To install perl modules locally (non-root):
-
-  choose the cpan configuration option: local:lib
-
-This installation might fail initally, if some dependencies are missing. Keep careful watch of the output for clues for missing system libraries or other perl packages. The failure message is usually near the end of the output. Required perl packages are often installed automatically. If a system library is needed, install this library and then retry the cpan installation. Sometimes, it is necessay to type:
->cpan> clean module-name
-  
-before trying to install a second time. This installation could take a long time if you have never installed any packages using cpan. A '?' at the cpan prompt gives the cpan help menu: 
->cpan> ?
-
-If you are capable, you could type:
->cpan> look module-name
-
-and work in the perl build directory directly. Type exit to get back to the cpan prompt.
-
-### R DEPENDENCIES
+#### R DEPENDENCIES
 The R package 'ks' is required.
 This package calculates the kernel smoothing bandwith using the SAMSE method by Tarn Duong <tarn.duong at gmail.com>. The 'ks' package will be downloaded, compiled (gcc needs to be installed for this), and installed. The 'ks' package also has some dependencies: R version (≥ 1.4.0), KernSmooth (≥ 2.22), misc3d (≥ 0.4-0), mvtnorm (≥ 1.0-0), rgl (≥ 0.66). The dependent packages are downloaded, compiled and installed automatically.
 
@@ -76,12 +30,37 @@ then follow with:
 
 you can choose to let R create/install into a local directory, if you do not have root/admin access.
 
+### Compile the C Code
+To compile the code type:
+>gcc -Wall -o sp -lm -lgc spatial_density.c
+
+
+### ADDITIONAL DEPENDENCIES
+These next three programs could be installed by the root or admin user or installed locally. Usually if a program is available from a linked linux repository, it is easier to install into the system by a root user, but, it is possible to install these programs locally. Most linux distributions have pre-compiled packages for these programs; check your distribution's packages. 
+
+One way to check if a system package is installed is to use the search command from a package manager (i.e., zypper, yum, apt, etc). For example, OPENSUSE uses the package manager, zypper. To check for the existence of a package installed with zypper, type:
+>zypper se package-name
+
+Installed packages will be identified by an 'i' or '+'.
+
+Otherwise, see the corresponding websites for more information:
+-  gmt (version 5 or 6, http://gmt.soest.hawaii.edu/projects/gmt/wiki/Installing )
+-  Proj (executables, libraries, devel packages, https://proj.org/index.html )
+-  R Statistical Programming Environment (R-base, R-devel, etc, https://www.r-project.org )
+
+
+
+#### USAGE
+To run the compiled spatial density code type:
+>./sp spatial_density.conf
+
+
 ### GMT plotting DEPENDENCIES
 The PERL script plot_spd.gmt.pl will grid and contour the spatial density output grid file. This plotting package depends
-on GMT (which depends on gdal, netcdf, Proj/Proj4)
+on GMT (which depends on gdal, netcdf, Proj)
 
-The plotting scripts depend on 2 additional perl packages which can be installed with cpan:
-Geo::Proj4 (this requires Proj4, its libs, programs, and devel files)
+The plotting scripts also depends on 2 additional perl packages which can be installed with cpan:
+Geo::Coordinates::UTM 
 File::Slurp
 
 ### TROUBLESHOOTING FAILURE TO GET OUTPUT
@@ -94,7 +73,7 @@ Also, check the logfile and the bandwidth.dat file; the bandwidth.dat should not
 The plotting script, plot_spd.gmt.pl, depends on the same spatial_density.conf configuration file.
 
 There are 4 plotting options:
-  * Option 0: No plot.
+  * Option 0:  No plot.
   * Option 1:  Quartile plot (WGS84/latlon)
   * Option 2:  Log(output) plot (WGS84/lat/lon
   * Option 3:  Quartile plot (UTM/meters)
@@ -104,11 +83,11 @@ The quartile plots contour the 5%, 16%, 33%, 50%, 67%, 84%, 95%, and 99% contour
 >perl plot_spd.gmt.pl spatial_density.conf <your spatial denstiy output file>
 
 ### TEST 
-To run a test example, COPY the perl scripts (spatial_density.pl, plot_spd.pl, convert2log.pl) into the test directory:
->cp *.pl test
+To run a test example, COPY the sd executable and perl scripts (plot_spd.gmt.pl, convert2log.pl) into the test directory:
+>cp sd *.pl test
 
 and then execute in the test directory directory:
->perl spatial_density.pl nejapa_spatial_density.conf
+./sd nejapa_spatial_density.conf
 
 Spatial density contour plots should be the result. Look for EPS, PNG and PDF images. A colorblind-friendly palette is used for the plots. 
 
